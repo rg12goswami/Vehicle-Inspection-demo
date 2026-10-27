@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Upload Inspection Media</title><link rel="stylesheet" href="/style.css">
+</head>
+<body class="upload-body">
+  <header class="topbar"><div><p class="eyebrow">VEHICLE INSPECTION PORTAL</p><h1>Vehicle Photo & Video Capture</h1><p class="subhead">Follow each step and upload the requested view.</p></div></header>
+  <main class="upload-main">
+    <section id="invalid-panel" class="card" hidden><h2>Upload link unavailable</h2><p>This link is invalid. Please request a new link from the admin.</p></section>
+    <section id="upload-panel" class="card" hidden>
+      <div class="section-heading"><div><p class="eyebrow">INSPECTION</p><h2 id="inspection-id">Loading…</h2></div><span id="upload-status" class="pill">Awaiting upload</span></div>
+      <div class="progress-row"><div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div><span id="progress-text" class="muted">0 of 15 steps complete</span></div>
+      <div class="step-layout">
+        <div class="step-counter"><span id="step-index">01</span><span class="muted">CAPTURE STEP</span></div>
+        <h2 id="step-title">Front View</h2><p id="step-instruction" class="muted">Take a clear front-view photo.</p>
+        <div id="preview-area" class="preview-area"><div class="preview-placeholder"><span class="camera-icon">◎</span><p>No file uploaded for this step yet.</p></div></div>
+        <input id="file-input" class="visually-hidden" type="file" accept="image/jpeg,image/png" capture="environment">
+        <div class="btn-row capture-actions"><button id="capture-btn" class="btn">Capture / Choose Photo</button><button id="replace-btn" class="btn btn-secondary" hidden>Replace File</button></div>
+        <div id="upload-message" class="message" role="status"></div>
+        <div class="btn-row nav-actions"><button id="prev-btn" class="btn btn-quiet">Previous</button><button id="next-btn" class="btn btn-accent">Next Step</button></div>
+      </div>
+      <div class="step-list-wrap"><h3>Checklist</h3><div id="step-list" class="step-list"></div></div>
+      <p class="muted fine-print">Uploads are linked to this inspection. Please wait for the upload confirmation before moving to the next step.</p>
+    </section>
+  </main>
+  <script src="/upload.js" defer></script>
+</body>
+</html>

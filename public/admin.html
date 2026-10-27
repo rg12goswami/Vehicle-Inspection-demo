@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inspection Admin | Vehicle Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="admin-body">
+  <header class="topbar">
+    <div><p class="eyebrow">VEHICLE INSPECTION PORTAL</p><h1>Admin Dashboard</h1></div>
+    <div class="topbar-actions"><a class="top-link" href="/">Home</a><button id="logout-btn" class="btn btn-quiet" hidden>Log out</button></div>
+  </header>
+  <main class="wide-main">
+    <section id="login-card" class="card login-card" hidden>
+      <h2>Admin sign in</h2><p class="muted">Use the local demo password configured in the README.</p>
+      <form id="login-form"><label for="admin-password">Password</label><input id="admin-password" type="password" required autocomplete="current-password"><button class="btn" type="submit">Sign in</button><p id="login-error" class="error" role="alert"></p></form>
+    </section>
+
+    <div id="dashboard" hidden>
+      <section class="card create-card">
+        <div><p class="eyebrow">START HERE</p><h2>Create an inspection link</h2><p class="muted">No vehicle details are needed at this stage. Generate the link, send it to the field worker, then fill in the report details later.</p></div>
+        <button id="create-btn" class="btn btn-large">+ Create Inspection / Generate Link</button>
+        <div id="new-link-box" class="link-box" hidden>
+          <div><span class="small-label">Inspection ID</span><strong id="new-id"></strong></div>
+          <label for="upload-link">Share this upload link</label><input id="upload-link" type="text" readonly>
+          <div class="btn-row"><button id="copy-btn" class="btn">Copy link</button><button id="open-btn" class="btn btn-secondary">Open upload page</button><span id="copy-msg" class="ok"></span></div>
+        </div>
+        <p id="create-error" class="error"></p>
+      </section>
+
+      <section class="card">
+        <div class="section-heading"><div><p class="eyebrow">RECORDS</p><h2>Inspections</h2></div><button id="refresh-list-btn" class="btn btn-secondary">Refresh</button></div>
+        <div class="table-wrap"><table><thead><tr><th>Inspection ID</th><th>Status</th><th>Created</th><th>Media</th><th>Action</th></tr></thead><tbody id="inspection-rows"><tr><td colspan="5">Loading…</td></tr></tbody></table></div>
+      </section>
+
+      <section id="detail-card" class="card detail-card" hidden>
+        <div class="section-heading"><div><p class="eyebrow">INSPECTION RECORD</p><h2 id="detail-title">Inspection details</h2><p id="detail-status" class="muted"></p></div><button id="close-detail-btn" class="btn btn-quiet">Close</button></div>
+        <div id="detail-link-panel" class="link-box compact"><span class="small-label">Field worker link</span><input id="detail-upload-link" type="text" readonly><div class="btn-row"><button id="copy-detail-link-btn" class="btn btn-secondary">Copy link</button><button id="open-detail-link-btn" class="btn btn-secondary">Open upload page</button><span id="detail-copy-msg" class="ok"></span></div></div>
+        <div class="section-heading subsection"><div><h3>Uploaded photos and video</h3><p class="muted">New uploads appear here automatically.</p></div><span id="media-progress" class="pill">0 files</span></div>
+        <div id="missing-photos" class="notice" hidden></div>
+        <div id="media-grid" class="media-grid"><p class="muted">No files uploaded yet.</p></div>
+
+        <div class="section-heading subsection"><div><h3>Report details</h3><p class="muted">Enter the remaining information after the field worker uploads the media.</p></div></div>
+        <form id="details-form">
+          <h4>Report and customer</h4>
+          <div class="form-grid">
+            <label>Company / valuer name<input name="companyName" maxlength="200"></label>
+            <label>Company address<input name="companyAddress" maxlength="500"></label>
+            <label>Report reference<input name="reportReference" maxlength="150"></label>
+            <label>Report date<input name="reportDate" type="date"></label>
+            <label>Bank / finance company<input name="bankName" maxlength="200"></label>
+            <label>Inspector / valuer<input name="inspectorName" maxlength="200"></label>
+            <label>Customer / owner name<input name="customerName" maxlength="200"></label>
+            <label>Customer address<input name="customerAddress" maxlength="500"></label>
+            <label>Inspection location<input name="inspectionLocation" maxlength="300"></label>
+          </div>
+          <h4>Vehicle details</h4>
+          <div class="form-grid">
+            <label>Vehicle category<select name="vehicleCategory"><option value="">Select category</option><option>2W</option><option>3W</option><option>4W</option><option>CV</option><option>FE</option><option>CE</option><option>Free Capture</option></select></label>
+            <label>Registration number<input name="registrationNumber" maxlength="100"></label>
+            <label>Manufacturer / make<input name="manufacturer" maxlength="150"></label>
+            <label>Model<input name="model" maxlength="150"></label>
+            <label>Manufacturing year<input name="manufactureYear" maxlength="20"></label>
+            <label>Registration date<input name="registrationDate" type="date"></label>
+            <label>Chassis number<input name="chassisNumber" maxlength="150"></label>
+            <label>Engine number<input name="engineNumber" maxlength="150"></label>
+            <label>Vehicle type<input name="vehicleType" maxlength="100"></label>
+            <label>Body type<input name="bodyType" maxlength="100"></label>
+            <label>Fuel type<input name="fuelType" maxlength="50"></label>
+            <label>Colour<input name="colour" maxlength="50"></label>
+            <label>Odometer (km)<input name="odometer" maxlength="50"></label>
+            <label>Invoice cost (₹)<input name="invoiceCost" maxlength="50"></label>
+            <label>Estimated market value (₹)<input name="valuationAmount" maxlength="50"></label>
+            <label>Estimated repair cost (₹)<input name="estimatedRepairCost" maxlength="50"></label>
+            <label>Estimated remaining life<input name="remainingLife" maxlength="100"></label>
+          </div>
+          <h4>Documents and condition</h4>
+          <div class="form-grid">
+            <label>Insurance details<input name="insuranceDetails" maxlength="250"></label>
+            <label>Fitness status<input name="fitnessStatus" maxlength="120"></label>
+            <label>Permit status<input name="permitStatus" maxlength="120"></label>
+            <label>Tax status<input name="taxStatus" maxlength="120"></label>
+            <label>Overall condition<input name="overallCondition" maxlength="150"></label>
+            <label>Engine condition<input name="engineCondition" maxlength="150"></label>
+            <label>Transmission / gearbox<input name="transmissionCondition" maxlength="150"></label>
+            <label>Brakes condition<input name="brakesCondition" maxlength="150"></label>
+            <label>Steering condition<input name="steeringCondition" maxlength="150"></label>
+            <label>Suspension condition<input name="suspensionCondition" maxlength="150"></label>
+            <label>Electrical condition<input name="electricalCondition" maxlength="150"></label>
+            <label>Battery condition<input name="batteryCondition" maxlength="150"></label>
+            <label>Tyre condition<input name="tyreCondition" maxlength="150"></label>
+            <label>Body / cabin condition<input name="bodyCondition" maxlength="150"></label>
+            <label>Chassis condition<input name="chassisCondition" maxlength="150"></label>
+            <label>Interior condition<input name="interiorCondition" maxlength="150"></label>
+            <label>Signature name<input name="inspectorSignatureName" maxlength="200"></label>
+          </div>
+          <label>Inspection remarks<textarea name="remarks" rows="3" maxlength="4000"></textarea></label>
+          <label>Report disclaimer<textarea name="disclaimer" rows="3" maxlength="4000"></textarea></label>
+          <div class="btn-row action-row"><button type="submit" class="btn">Save details</button><button type="button" id="generate-pdf-btn" class="btn btn-accent">Generate PDF report</button><button type="button" id="download-pdf-btn" class="btn btn-secondary" hidden>Download PDF</button><button type="button" id="download-zip-btn" class="btn btn-secondary">Download ZIP</button><span id="save-status" class="ok" role="status"></span></div>
+          <p id="details-error" class="error"></p>
+          <p id="report-stale" class="notice" hidden>Details have changed since the last PDF. Generate the report again to update it.</p>
+        </form>
+      </section>
+    </div>
+  </main>
+  <div id="toast" class="toast" hidden></div>
+  <script src="admin.js"></script>
+</body>
+</html>
